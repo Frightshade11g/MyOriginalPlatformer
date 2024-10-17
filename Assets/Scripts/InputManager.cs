@@ -7,11 +7,11 @@ public class InputManager : MonoBehaviour
 {
     public PlayerInput PlayerInput;
 
-    public Vector2 Movement;
-    public bool JumpWasPressed;
-    public bool JumpIsHeld;
-    public bool JumpWasReleased;
-    public bool RunIsHeld;
+    public static Vector2 Movement;
+    public static bool JumpWasPressed;
+    public static bool JumpIsHeld;
+    public static bool JumpWasReleased;
+    public static bool RunIsHeld;
 
     private InputAction _moveAction;
     private InputAction _jumpAction;
