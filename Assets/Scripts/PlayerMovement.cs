@@ -41,8 +41,14 @@ public class PlayerMovement : MonoBehaviour
                 targetVelocity = new Vector2(moveInput.x, 0f) * MoveStats.MaxRunSpeed;
             }
             else { targetVelocity = new Vector2(moveInput.x, 0f) * MoveStats.maxWalkSpeed; }
-            _moveVelocity = Vector2.Lerp(_moveVelocity, targetVelocity, acceleration * Time.deltaTime);
+            _moveVelocity = Vector2.Lerp(_moveVelocity, targetVelocity, acceleration * Time.fixedDeltaTime);
             _rb.velocity = new Vector2(_moveVelocity.x, _rb.velocity.y);
+        }
+
+        else if (moveInput == Vector2.zero)
+        {
+            _moveVelocity = Vector2.Lerp(_moveVelocity, Vector2.zero, deceleration * Time.fixedDeltaTime);
+            _rb.velocity = new Vector2(_moveVelocity.x, _moveVelocity.y);
         }
     }
 

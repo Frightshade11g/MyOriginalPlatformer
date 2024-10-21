@@ -309,11 +309,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   PlayerInput: {fileID: 0}
-  Movement: {x: 0, y: 0}
-  JumpWasPressed: 0
-  JumpIsHeld: 0
-  JumpWasReleased: 0
-  RunIsHeld: 0
 --- !u!1 &1376638234
 GameObject:
   m_ObjectHideFlags: 0
@@ -729,3 +724,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 563ad868b2302b84891b7e5814da8d44, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  MoveStats: {fileID: 0}
+  _feetColl: {fileID: 983963224}
+  _bodyColl: {fileID: 1728058998}
