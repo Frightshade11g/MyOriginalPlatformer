@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.Profiling;
 using UnityEngine;
+using UnityEngine.InputSystem.LowLevel;
 
 [CreateAssetMenu(menuName = "Player Movement")]
 public class PlayerMovementStats : ScriptableObject
@@ -44,6 +45,10 @@ public class PlayerMovementStats : ScriptableObject
     [Range(0f, 1f)] public float JumpCoyoteTime = 0.1f;
 
     [Header("Debug")]
+    public bool DebugShowIsGroundedBox;
+    public bool DebugShowHeadBumpBox;
+
+    [Header("Jump Visualzation Tool")]
     public bool ShowWalkJumpArc = false;
     public bool ShowRunJumpArc = false;
     public bool StopOnCollision = true;
@@ -52,6 +57,23 @@ public class PlayerMovementStats : ScriptableObject
     [Range(0, 500)] public int VisualizationSteps = 90;
 
     public float Gravity { get; private set; }
-
     public float InitialJumpVelocity { get; private set; }
+    public float AdjustedJumpHeight { get; private set; }
+
+    private void OnValidate()
+    {
+        CalculateValues();
+    }
+
+    private void OnEnable()
+    {
+        CalculateValues();
+    }
+
+    private void CalculateValues()
+    {
+        AdjustedJumpHeight = JumpHeight * JumpHeightCompensationFactor;
+        Gravity = -(2f * JumpHeight) / Mathf.Pow(TimeTillJumpApex, 2f);
+        InitialJumpVelocity = Mathf.Abs(Gravity) * TimeTillJumpApex;
+    }
 }
