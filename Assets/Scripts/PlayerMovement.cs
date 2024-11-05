@@ -24,9 +24,9 @@ public class PlayerMovement : MonoBehaviour
     //jump vars
     public float VerticalVelocity { get; private set; }
     private bool _isJumping;
-    private bool _isFastFaliing;
+    private bool _isFastFalling;
     private bool _isFalling;
-    private float _fastFallingTime;
+    private float _fastFallTime;
     private float _fastFallReleaseSpeed;
     private int _numberOfJumpsUsed;
 
@@ -37,7 +37,7 @@ public class PlayerMovement : MonoBehaviour
 
     //jump buffer vars
     private float _jumpBufferTimer;
-    private float _jumpReleasedDuringBuffer;
+    private bool _jumpReleasedDuringBuffer;
 
     //coyote time vars
     private float _coyoteTimer;
@@ -141,7 +141,7 @@ public class PlayerMovement : MonoBehaviour
         {
             if(_jumpBufferTimer > 0f)
             {
-                //_jumpReleasedDuringBuffer = true;
+                _jumpReleasedDuringBuffer = true;
             }
 
             if(_isJumping && VerticalVelocity > 0f)
@@ -149,13 +149,13 @@ public class PlayerMovement : MonoBehaviour
                 if(_isPastApexThreshold)
                 {
                     _isPastApexThreshold = false;
-                    _isFastFaliing = true;
-                    _fastFallingTime = MoveStats.TimeForUpwardsCancel;
+                    _isFastFalling = true;
+                    _fastFallTime = MoveStats.TimeForUpwardsCancel;
                     VerticalVelocity = 0f;
                 }
                 else
                 {
-                    _isFastFaliing = true;
+                    _isFastFalling = true;
                     _fastFallReleaseSpeed = VerticalVelocity;
                 }
             }
@@ -165,19 +165,63 @@ public class PlayerMovement : MonoBehaviour
         //Initiate jump Buffering and coyote time
         if(_jumpBufferTimer > 0f && !_isJumping && (_isGrounded || _coyoteTimer > 0f))
         {
+            InitiateJump(1);
 
+            if(_jumpReleasedDuringBuffer)
+            {
+                _isFastFalling = true;
+                _fastFallReleaseSpeed = VerticalVelocity;
+            }
         }
+
 
         //Double jump
 
         //Air jump after Coyote time lapsed
 
+
         //Landed
+
+        if((_isJumping || _isFalling) && _isGrounded && VerticalVelocity <= 0)
+        {
+            _isJumping = false;
+            _isFalling = false;
+            _isFastFalling = false;
+            _fastFallTime = 0f;
+            _isPastApexThreshold = false;
+            _numberOfJumpsUsed = 0;
+
+            VerticalVelocity = Physics2D.gravity.y;
+        }
+    }
+
+    private void InitiateJump(int numberOfJumpsUsed)
+    {
+        if(!_isJumping)
+        {
+            _isJumping = true;
+        }
+
+        _jumpBufferTimer = 0f;
+        _numberOfJumpsUsed = numberOfJumpsUsed;
+        VerticalVelocity = MoveStats.InitialJumpVelocity;
     }
 
     private void Jump()
     {
+        //Apply Gravity While Jumping
 
+        //Check for Head Bump
+
+        //ApexControls
+
+        //Gravity on Acending
+
+        //Gravity on Decending
+
+        //Jump Cut
+
+        //Normal Gravity While Falling Without Jumping
     }
 
     #endregion
