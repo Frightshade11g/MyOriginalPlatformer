@@ -210,18 +210,96 @@ public class PlayerMovement : MonoBehaviour
     private void Jump()
     {
         //Apply Gravity While Jumping
+        if (_isJumping)
+        {
+            //Check for Head Bump
+            if (_bumpedHead)
+            {
+                _isFastFalling = true;
+            }
+            //Gravity on Acending
+            if (VerticalVelocity >= 0f)
+            {
+                //ApexControls
+                _apexPoint = Mathf.InverseLerp(MoveStats.InitialJumpVelocity, 0f, VerticalVelocity);
 
-        //Check for Head Bump
+                if (_apexPoint > MoveStats.ApexThreshold)
+                {
+                    if (!_isPastApexThreshold)
+                    {
+                        _isPastApexThreshold = true;
+                        _timePastApexThreshold = 0f;
+                    }
 
-        //ApexControls
+                    if (_isPastApexThreshold)
+                    {
+                        _timePastApexThreshold += Time.deltaTime;
+                        if (_timePastApexThreshold < MoveStats.ApexHangTime)
+                        {
+                            VerticalVelocity = 0f;
+                        }
+                        else
+                        {
+                            VerticalVelocity = -0.01f;
+                        }
+                    }
+                }
+                //Gravity on Acending but Not Past Apex Threshold
+                else
+                {
+                    VerticalVelocity += MoveStats.Gravity * Time.deltaTime;
+                    if (_isPastApexThreshold)
+                    {
+                        _isPastApexThreshold = false;
+                    }
+                }
+            }
 
-        //Gravity on Acending
+            //Gravity On Decending
+            else if (!_isFastFalling)
+            {
+                VerticalVelocity += MoveStats.Gravity * MoveStats.GravityOnReleaseMultiplier * Time.deltaTime;
+            }
 
-        //Gravity on Decending
+            else if (VerticalVelocity < 0f)
+            {
+                if(!_isFalling)
+                {
+                    _isFalling = true;
+                }
+            }
+        }
 
         //Jump Cut
+        if(_isFastFalling)
+        {
+            if(_fastFallTime >= MoveStats.TimeForUpwardsCancel)
+            {
+                VerticalVelocity += MoveStats.GravityOnReleaseMultiplier * Time.deltaTime;
+            }
+            else if (_fastFallTime < MoveStats.TimeForUpwardsCancel)
+            {
+                VerticalVelocity = Mathf.Lerp(_fastFallReleaseSpeed, 0f, (_fastFallTime / MoveStats.TimeForUpwardsCancel));
+            }
+
+            _fastFallTime += Time.deltaTime;
+        }
 
         //Normal Gravity While Falling Without Jumping
+        if(_isGrounded && _isJumping)
+        {
+            if(!_isFalling)
+            {
+                _isFalling = true;
+            }
+
+            VerticalVelocity += MoveStats.Gravity * Time.deltaTime;
+        }
+
+        //Clamp Fall Speed
+        VerticalVelocity = Mathf.Clamp(VerticalVelocity, -MoveStats.MaxFallSpeed, 50f);
+
+        _rb.velocity = new Vector2(_rb.velocity.x, VerticalVelocity);
     }
 
     #endregion
@@ -261,6 +339,7 @@ public class PlayerMovement : MonoBehaviour
     private void CollisionChecks()
     {
         IsGrounded();
+        //BumpedHead(); Do this next 16:52 in vid :)
     }
 
     #endregion
