@@ -5,7 +5,7 @@ using UnityEngine.InputSystem;
 
 public class InputManager : MonoBehaviour
 {
-    public PlayerInput PlayerInput;
+    public static PlayerInput PlayerInput;
 
     public static Vector2 Movement;
     public static bool JumpWasPressed;

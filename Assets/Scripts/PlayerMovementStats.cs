@@ -8,7 +8,7 @@ using UnityEngine.InputSystem.LowLevel;
 public class PlayerMovementStats : ScriptableObject
 {
     [Header("Walk")]
-    [Range(1f, 100f)] public float maxWalkSpeed = 12.5f;
+    [Range(1f, 100f)] public float MaxWalkSpeed = 12.5f;
     [Range(0.25f, 50f)] public float GroundAcceleration = 5f;
     [Range(0.25f, 50f)] public float GroundDecceleration = 20f;
     [Range(0.25f, 50f)] public float AirAcceleration = 5f;
@@ -20,7 +20,7 @@ public class PlayerMovementStats : ScriptableObject
     [Header("Grounded/Collision Checks")]
     public LayerMask GroundLayer;
     public float GroundDetectionRayLength = 0.02f;
-    public float HeadDetectionRayLengh = 0.02f;
+    public float HeadDetectionRayLength = 0.02f;
     [Range(0f, 1f)] public float HeadWidth = 0.75f;
 
     [Header("Jump")]
@@ -29,7 +29,7 @@ public class PlayerMovementStats : ScriptableObject
     public float TimeTillJumpApex = 0.35f;
     [Range(0.01f, 5f)] public float GravityOnReleaseMultiplier = 2f;
     public float MaxFallSpeed = 26f;
-    [Range(1, 5)] public int NumberOfJumpsAllowed = 2;
+    [Range(1, 5)] public int NumberOfJumpsAllowed = 1; //IT'S HERE
 
     [Header("Jump Cut")]
     [Range(0.02f, 0.3f)] public float TimeForUpwardsCancel = 0.027f;
@@ -45,7 +45,7 @@ public class PlayerMovementStats : ScriptableObject
     [Range(0f, 1f)] public float JumpCoyoteTime = 0.1f;
 
     [Header("Debug")]
-    public bool DebugShowIsGroundedBox;
+    public bool DebugShowIsGroundedBox = true;
     public bool DebugShowHeadBumpBox;
 
     [Header("Jump Visualzation Tool")]
@@ -73,7 +73,7 @@ public class PlayerMovementStats : ScriptableObject
     private void CalculateValues()
     {
         AdjustedJumpHeight = JumpHeight * JumpHeightCompensationFactor;
-        Gravity = -(2f * JumpHeight) / Mathf.Pow(TimeTillJumpApex, 2f);
+        Gravity = -(2f * AdjustedJumpHeight) / Mathf.Pow(TimeTillJumpApex, 2f);
         InitialJumpVelocity = Mathf.Abs(Gravity) * TimeTillJumpApex;
     }
 }
