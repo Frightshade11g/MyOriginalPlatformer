@@ -19,7 +19,7 @@ public class PlayerMovement : MonoBehaviour
     //collision Checks
     private RaycastHit2D _groundHit;
     private RaycastHit2D _headHit;
-    public bool _isGrounded;
+    public bool _isGrounded = true;
     private bool _bumpedHead;
 
     //jump vars
