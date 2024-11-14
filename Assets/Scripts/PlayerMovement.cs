@@ -19,7 +19,7 @@ public class PlayerMovement : MonoBehaviour
     //collision Checks
     private RaycastHit2D _groundHit;
     private RaycastHit2D _headHit;
-    public bool _isGrounded = true;
+    private bool _isGrounded;
     private bool _bumpedHead;
 
     //jump vars
@@ -33,7 +33,7 @@ public class PlayerMovement : MonoBehaviour
 
     //apex vars
     private float _apexPoint;
-    private float _timePastApexThreshold;
+    public float _timePastApexThreshold;
     private bool _isPastApexThreshold;
 
     //jump buffer vars
@@ -198,9 +198,10 @@ public class PlayerMovement : MonoBehaviour
             _isFalling = false;
             _isFastFalling = false;
             _fastFallTime = 0f;
-            _isPastApexThreshold = false;
+            _isPastApexThreshold = false; 
             _numberOfJumpsUsed = 0;
-    
+            _timePastApexThreshold = 0f;
+
             VerticalVelocity = Physics2D.gravity.y;
         }
     }
@@ -232,7 +233,7 @@ public class PlayerMovement : MonoBehaviour
             {
                 //APEX CONTROLS
                 _apexPoint = Mathf.InverseLerp(MoveStats.InitialJumpVelocity, 0f, VerticalVelocity);
-    
+                
                 if (_apexPoint > MoveStats.ApexThreshold)
                 {
                     if (!_isPastApexThreshold)
@@ -240,7 +241,7 @@ public class PlayerMovement : MonoBehaviour
                         _isPastApexThreshold = true;
                         _timePastApexThreshold = 0f;
                     }
-    
+                
                     if (_isPastApexThreshold)
                     {
                         _timePastApexThreshold += Time.deltaTime;
@@ -250,7 +251,7 @@ public class PlayerMovement : MonoBehaviour
                         }
                         else
                         {
-                            VerticalVelocity = -0.01f;
+                            VerticalVelocity = MoveStats.Gravity;
                         }
                     }
                 }
@@ -291,7 +292,7 @@ public class PlayerMovement : MonoBehaviour
             {
                 VerticalVelocity = Mathf.Lerp(_fastFallReleaseSpeed, 0f, (_fastFallTime / MoveStats.TimeForUpwardsCancel));
             }
-    
+        
             _fastFallTime += Time.fixedDeltaTime;
         }
     
