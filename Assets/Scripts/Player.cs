@@ -13,7 +13,7 @@ public class Player : MonoBehaviour
     [Header("Jumping Variables")]
     [SerializeField] float jumpVelocity = 10f;
     [SerializeField] float fallMultiplier = 11f;
-    [SerializeField] float lowJumpMultiplier = 11f;
+    //[SerializeField] float lowJumpMultiplier = 11f;
     [SerializeField] private LayerMask groundlayerMask;
 
     void Awake()
@@ -51,6 +51,7 @@ public class Player : MonoBehaviour
     private bool IsGrounded()
     {
         RaycastHit2D rayCastHit2D = Physics2D.BoxCast(col.bounds.center, col.bounds.size, 0f, Vector2.down, 0.1f, groundlayerMask);
+        Debug.Log("WORK");
         return rayCastHit2D.collider != null;
     }
 
