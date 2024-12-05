@@ -16,6 +16,9 @@ public class Player : MonoBehaviour
     //[SerializeField] float lowJumpMultiplier = 11f;
     [SerializeField] private LayerMask groundlayerMask;
 
+    [Header("MovementVariables")]
+    Vector2 moveVelocity;
+
     void Awake()
     {
         playerBase = GetComponent<Player_Base>();
@@ -34,7 +37,7 @@ public class Player : MonoBehaviour
 
     private void Jump()
     {
-        if (InputManager.JumpIsHeld && IsGrounded())
+        if (Input.GetKeyDown(KeyCode.Space) && IsGrounded())
         {
             rb.velocity = Vector2.up * jumpVelocity;
         }
@@ -54,6 +57,12 @@ public class Player : MonoBehaviour
         Debug.Log("WORK");
         return rayCastHit2D.collider != null;
     }
+
+    #endregion
+
+    #region Movement
+
+
 
     #endregion
 }

@@ -5,7 +5,7 @@ using UnityEngine.InputSystem;
 
 public class InputManager : MonoBehaviour
 {
-    public static PlayerInput PlayerInput;
+    public static PlayerInput playerInput;
 
     public static Vector2 Movement;
     public static bool JumpWasPressed;
@@ -19,11 +19,11 @@ public class InputManager : MonoBehaviour
 
     void Awake()
     {
-        PlayerInput = GetComponent<PlayerInput>();
+        playerInput = GetComponent<PlayerInput>();
 
-        moveAction = PlayerInput.actions["Move"];
-        jumpAction = PlayerInput.actions["Jump"];
-        runAction = PlayerInput.actions["Run"];
+        moveAction = playerInput.actions["Move"];
+        jumpAction = playerInput.actions["Jump"];
+        runAction = playerInput.actions["Run"];
     }
 
     void Update()
@@ -36,4 +36,5 @@ public class InputManager : MonoBehaviour
 
         RunIsHeld = runAction.IsPressed();
     }
+
 }
