@@ -5,15 +5,12 @@ using UnityEngine;
 
 public class Player_Base : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Awake()
+    public void PlayIdleAnim()
     {
-        
-    }
 
-    // Update is called once per frame
-    void Update()
+    }
+    public void PlayMoveAnim()
     {
-        
+
     }
 }
