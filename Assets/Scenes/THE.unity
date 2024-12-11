@@ -262,12 +262,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 882b276f5c4a4784f9fae5f6a8d52a8a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  jumpVelocity: 16
+  jumpVelocity: 17
   fallMultiplier: 8
   groundlayerMask:
     serializedVersion: 2
     m_Bits: 8
-  buttonPressWindow: 0.15
+  buttonPressWindow: 0.1
   moveSpeed: 10
 --- !u!70 &707398764
 CapsuleCollider2D:

@@ -15,12 +15,13 @@ public class Player : MonoBehaviour
     [SerializeField] float fallMultiplier = 11f;
     //[SerializeField] float lowJumpMultiplier = 11f;
     [SerializeField] private LayerMask groundlayerMask;
+    private float fallGravityScale = 6f;
 
     [Header("Variable Jump Height")]
     private bool jumping;
     private float buttonPressedTime;
+    float jumpCutGravityMultiplier = 12;
     [SerializeField] float buttonPressWindow;
-    private float fallGravityScale = 6f;
     private float gravityScale = 4f;
 
     [Header("MovementVariables")]
@@ -60,7 +61,7 @@ public class Player : MonoBehaviour
 
             if(buttonPressedTime < buttonPressWindow && Input.GetKeyUp(KeyCode.Space))
             {
-                rb.gravityScale = fallGravityScale;
+                rb.gravityScale = jumpCutGravityMultiplier;
             }
             if(rb.velocity.y < 0)
             {
