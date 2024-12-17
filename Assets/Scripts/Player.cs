@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.InteropServices.WindowsRuntime;
 using UnityEngine;
 
 public class Player : MonoBehaviour
@@ -52,7 +53,7 @@ public class Player : MonoBehaviour
 
     private bool IsGrounded()
     {
-        RaycastHit2D rayCastHit2D = Physics2D.BoxCast(col.bounds.center, col.bounds.size, 0f, Vector2.down, 0.1f, groundlayerMask);
+        RaycastHit2D rayCastHit2D = Physics2D.BoxCast(col.bounds.center, col.bounds.size, 0f, Vector2.down, 0.01f, groundlayerMask);
         return rayCastHit2D.collider != null;
     }
 
@@ -60,8 +61,8 @@ public class Player : MonoBehaviour
     {
         if (IsGrounded())
         {
-            coyoteTimeCounter = coyoteTime;
             jumpBuffered = false;
+            coyoteTimeCounter = coyoteTime;
         }
         else
         {
@@ -73,30 +74,35 @@ public class Player : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            jumpBufferCounter = jumpBufferTime;
             if (!IsGrounded())
             {
                 jumpBuffered = true;
             }
+            jumpBufferCounter = jumpBufferTime;
         }
         else
         {
-            jumpBufferCounter -= Time.deltaTime; ;
+            jumpBufferCounter -= Time.deltaTime;
         }
     }
 
     private void Jump()
     {
-        if (!jumpBuffered)
-        {
-            if (coyoteTimeCounter > 0f && jumpBufferCounter > 0f)
+        //if (!jumpBuffered)
+        //{
+            if ((coyoteTimeCounter > 0f && jumpBufferCounter > 0f) && !jumping)
             {
+                coyoteTimeCounter = 0f;
+//                if (jumping) // don't let me spam the jump
+//                {
+                   // return; // exit the jump method right away.
+//                }
+                jumpBuffered = true;
                 jumpBufferCounter = 0f;
                 rb.gravityScale = gravityScale;
                 rb.velocity = Vector2.up * jumpVelocity;
                 jumping = true;
                 buttonPressedTime = 0f;
-                coyoteTimeCounter = 0f;
             }
 
             if (jumping)
@@ -113,7 +119,7 @@ public class Player : MonoBehaviour
                     jumping = false;
                 }
             }
-        }
+        //}
     }
 
     #endregion
