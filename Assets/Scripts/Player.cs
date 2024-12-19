@@ -14,24 +14,22 @@ public class Player : MonoBehaviour
     [SerializeField] float jumpVelocity = 10f;
     [SerializeField] private LayerMask groundlayerMask;
     private float fallGravityScale = 6f;
+    private float gravityScale = 4f;
 
     [Header("Variable Jump Height")]
     private bool jumping;
     private float buttonPressedTime;
-    private float jumpCutGravityMultiplier = 12;
     [SerializeField] float buttonPressWindow;
-    private float gravityScale = 4f;
+    private float jumpCutGravityMultiplier = 12;
 
     [Header("Coyote Time/Jump Buffering")]
     [SerializeField] private float coyoteTime = 0.2f;
-    private float coyoteTimeCounter;
-    private bool jumpBuffered = false;
+    private float coyoteTimeCounter; //if you are grounded, this variable = 0.2, but if you fall of a ledge, this varibalbe starts to count down. This way, the variable can be > 0 for a perod of 0.2 seconds after falling off a ledge to enable the player to jump slightly right after falling off the legde
 
     [SerializeField] private float jumpBufferTime = 0.2f;
-    private float jumpBufferCounter;
+    private float jumpBufferCounter; //if you press spacebar, this variable is set to 0.2 regardless of if you are already jumping or not. This way, if you press space 0.2 seconds before hitting the ground, you will jump once you hit the ground. Or if you're already on the ground, after pressing space, this variable will be set to 0.2 enabling the character to jump while on the ground.
 
     [Header("MovementVariables")]
-    Vector2 moveVelocity;
     [SerializeField] float moveSpeed = 10f;
 
     void Awake()
@@ -61,7 +59,6 @@ public class Player : MonoBehaviour
     {
         if (IsGrounded())
         {
-            jumpBuffered = false;
             coyoteTimeCounter = coyoteTime;
         }
         else
@@ -74,10 +71,6 @@ public class Player : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            if (!IsGrounded())
-            {
-                jumpBuffered = true;
-            }
             jumpBufferCounter = jumpBufferTime;
         }
         else
@@ -88,38 +81,32 @@ public class Player : MonoBehaviour
 
     private void Jump()
     {
-        //if (!jumpBuffered)
-        //{
-            if ((coyoteTimeCounter > 0f && jumpBufferCounter > 0f) && !jumping)
+        if (coyoteTimeCounter > 0f) //!jumping used to be here but it didn't work because jumping only becomes false if the y velcocity is less than 0 , so falling downward. But if you release then press space fast enough before the player starts falling, you can spam the jump for a second time while in the air.
+        {   coyoteTimeCounter = 0f;
+            if (!jumping && jumpBufferCounter > 0f)
             {
-                coyoteTimeCounter = 0f;
-//                if (jumping) // don't let me spam the jump
-//                {
-                   // return; // exit the jump method right away.
-//                }
-                jumpBuffered = true;
+                jumping = true;
                 jumpBufferCounter = 0f;
                 rb.gravityScale = gravityScale;
                 rb.velocity = Vector2.up * jumpVelocity;
-                jumping = true;
                 buttonPressedTime = 0f;
             }
+        }
 
-            if (jumping)
+        if (jumping)
+        {
+            buttonPressedTime += Time.deltaTime;
+
+            if (buttonPressedTime < buttonPressWindow && Input.GetKeyUp(KeyCode.Space))
             {
-                buttonPressedTime += Time.deltaTime;
-
-                if (buttonPressedTime < buttonPressWindow && Input.GetKeyUp(KeyCode.Space))
-                {
-                    rb.gravityScale = jumpCutGravityMultiplier;
-                }
-                if (rb.velocity.y < 0)
-                {
-                    rb.gravityScale = fallGravityScale;
-                    jumping = false;
-                }
+                rb.gravityScale = jumpCutGravityMultiplier;
             }
-        //}
+            if (rb.velocity.y < 0)
+            {
+                rb.gravityScale = fallGravityScale;
+                jumping = false;
+            }
+        }
     }
 
     #endregion
