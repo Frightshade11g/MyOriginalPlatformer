@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Button
   - Trigger
+  - MovingPlatform
   layers:
   - Default
   - TransparentFX
