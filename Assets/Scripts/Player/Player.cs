@@ -29,13 +29,21 @@ public class Player : MonoBehaviour
     [SerializeField] private float jumpBufferTime = 0.2f;
     private float jumpBufferCounter; //if you press spacebar, this variable is set to 0.2 regardless of if you are already jumping or not. This way, if you press space 0.2 seconds before hitting the ground, you will jump once you hit the ground. Or if you're already on the ground, after pressing space, this variable will be set to 0.2 enabling the character to jump while on the ground.
 
-    [Header("MovementVariables")]
+    [Header("Movement Variables")]
     [SerializeField] float moveSpeed = 10f;
+    public bool moving;
+
+    [Header("Health Variables")]
+    public HealthBar healthBar;
+    private int maxHealth = 100;
+    private int currentHealth;
 
     void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
         col = GetComponent<CapsuleCollider2D>();
+        currentHealth = maxHealth;
+        healthBar.SetMaxHealth(maxHealth);
     }
 
     void Update()
@@ -45,7 +53,21 @@ public class Player : MonoBehaviour
         Jump();
         HandleMovement();
         Animations();
+        if(Input.GetKeyDown(KeyCode.R)) //TEMPORARY CODE. *WILL BE TRIGGERED UPON ENEMY AND SPIKE COLLISIONS*
+        {
+            TakeDamage(20);
+        }
     }
+
+    #region Healh Management
+
+    void TakeDamage(int damage)
+    {
+        currentHealth -= damage;
+        healthBar.SetHealth(currentHealth);
+    }
+
+    #endregion
 
     #region Jumping
 
@@ -82,14 +104,19 @@ public class Player : MonoBehaviour
     private void Jump()
     {
         if (coyoteTimeCounter > 0f) //!jumping used to be here but it didn't work because jumping only becomes false if the y velcocity is less than 0 , so falling downward. But if you release then press space fast enough before the player starts falling, you can spam the jump for a second time while in the air.
-        {   coyoteTimeCounter = 0f;
+        {   
             if (!jumping && jumpBufferCounter > 0f)
             {
+                coyoteTimeCounter = 0f;
                 jumping = true;
                 jumpBufferCounter = 0f;
                 rb.gravityScale = gravityScale;
                 rb.velocity = Vector2.up * jumpVelocity;
                 buttonPressedTime = 0f;
+            }
+            else if (jumping)
+            {
+                coyoteTimeCounter = 0f;
             }
         }
 
@@ -118,16 +145,19 @@ public class Player : MonoBehaviour
         if(Input.GetKey(KeyCode.A))
         {
             rb.velocity = new Vector2(-moveSpeed, rb.velocity.y);
+            moving = true;
         }
         else
         {
             if (Input.GetKey(KeyCode.D))
             {
                 rb.velocity = new Vector2(+moveSpeed, rb.velocity.y);
+                moving = true;
             }
             else
             {
                 rb.velocity = new Vector2(0, rb.velocity.y);
+                moving = false;
             }
         }
     }
