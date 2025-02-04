@@ -9,6 +9,7 @@ public class Player : MonoBehaviour
     [Header("References")]
     private Rigidbody2D rb;
     private CapsuleCollider2D col;
+    MovingPlatformDetector movingPlatformDetector;
 
     [Header("Jumping Variables")]
     [SerializeField] float jumpVelocity = 10f;
@@ -31,7 +32,6 @@ public class Player : MonoBehaviour
 
     [Header("Movement Variables")]
     [SerializeField] float moveSpeed = 10f;
-    public bool moving;
 
     [Header("Health Variables")]
     public HealthBar healthBar;
@@ -42,6 +42,7 @@ public class Player : MonoBehaviour
     {
         rb = GetComponent<Rigidbody2D>();
         col = GetComponent<CapsuleCollider2D>();
+        movingPlatformDetector = FindAnyObjectByType<MovingPlatformDetector>();
         currentHealth = maxHealth;
         healthBar.SetMaxHealth(maxHealth);
     }
@@ -145,19 +146,16 @@ public class Player : MonoBehaviour
         if(Input.GetKey(KeyCode.A))
         {
             rb.velocity = new Vector2(-moveSpeed, rb.velocity.y);
-            moving = true;
         }
         else
         {
             if (Input.GetKey(KeyCode.D))
             {
                 rb.velocity = new Vector2(+moveSpeed, rb.velocity.y);
-                moving = true;
             }
             else
             {
                 rb.velocity = new Vector2(0, rb.velocity.y);
-                moving = false;
             }
         }
     }
