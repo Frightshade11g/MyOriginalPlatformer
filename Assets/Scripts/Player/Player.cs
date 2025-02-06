@@ -9,7 +9,7 @@ public class Player : MonoBehaviour
     [Header("References")]
     private Rigidbody2D rb;
     private CapsuleCollider2D col;
-    MovingPlatformDetector movingPlatformDetector;
+    MovingPlatforms movingPlatforms;
 
     [Header("Jumping Variables")]
     [SerializeField] float jumpVelocity = 10f;
@@ -42,7 +42,7 @@ public class Player : MonoBehaviour
     {
         rb = GetComponent<Rigidbody2D>();
         col = GetComponent<CapsuleCollider2D>();
-        movingPlatformDetector = FindAnyObjectByType<MovingPlatformDetector>();
+        movingPlatforms = FindAnyObjectByType<MovingPlatforms>();
         currentHealth = maxHealth;
         healthBar.SetMaxHealth(maxHealth);
     }
