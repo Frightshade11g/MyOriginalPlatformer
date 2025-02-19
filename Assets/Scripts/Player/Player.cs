@@ -10,6 +10,8 @@ public class Player : MonoBehaviour
     private Rigidbody2D rb;
     private CapsuleCollider2D col;
     MovingPlatforms movingPlatforms;
+    FadeIn fadeIn;
+    [SerializeField] Canvas canvasObject;
 
     [Header("Jumping Variables")]
     [SerializeField] float jumpVelocity = 10f;
@@ -45,6 +47,7 @@ public class Player : MonoBehaviour
         movingPlatforms = FindAnyObjectByType<MovingPlatforms>();
         currentHealth = maxHealth;
         healthBar.SetMaxHealth(maxHealth);
+        fadeIn = FindObjectOfType<FadeIn>();
     }
 
     void Update()
@@ -54,18 +57,24 @@ public class Player : MonoBehaviour
         Jump();
         HandleMovement();
         Animations();
-        if(Input.GetKeyDown(KeyCode.R)) //TEMPORARY CODE. *WILL BE TRIGGERED UPON ENEMY AND SPIKE COLLISIONS*
-        {
-            TakeDamage(20);
-        }
+        GameOver();
     }
 
     #region Healh Management
 
-    void TakeDamage(int damage)
+    public void TakeDamage(int damage)
     {
         currentHealth -= damage;
         healthBar.SetHealth(currentHealth);
+    }
+
+    void GameOver()
+    {
+        if(currentHealth <= 0)
+        {
+            fadeIn.fadeIn = true;
+            canvasObject.GetComponent<Canvas>().enabled = false;
+        }
     }
 
     #endregion
