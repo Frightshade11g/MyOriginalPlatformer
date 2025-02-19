@@ -75,7 +75,6 @@ public class Player : MonoBehaviour
     public bool IsGrounded()
     {
         RaycastHit2D rayCastHit2D = Physics2D.BoxCast(col.bounds.center, col.bounds.size, 0f, Vector2.down, 0.01f, groundlayerMask);
-        Debug.DrawRay(col.bounds.size, Vector2.down, Color.green);
         return rayCastHit2D.collider != null;
     }
 
