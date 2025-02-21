@@ -1,8 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class FadeIn : MonoBehaviour
 {
@@ -23,7 +23,7 @@ public class FadeIn : MonoBehaviour
             }
         }
 
-        if(myUIGroup.alpha == 1)
+        if(myUIGroup.alpha >= 1)
         {
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
         }

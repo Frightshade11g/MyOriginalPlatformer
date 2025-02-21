@@ -10,7 +10,7 @@ public class Player : MonoBehaviour
     private Rigidbody2D rb;
     private CapsuleCollider2D col;
     MovingPlatforms movingPlatforms;
-    [SerializeField] FadeIn fadeIn;
+    FadeIn fadeIn;
     [SerializeField] Canvas canvasObject;
 
     [Header("Jumping Variables")]
@@ -47,7 +47,7 @@ public class Player : MonoBehaviour
         movingPlatforms = FindAnyObjectByType<MovingPlatforms>();
         currentHealth = maxHealth;
         healthBar.SetMaxHealth(maxHealth);
-        //fadeIn = FindObjectOfType<FadeIn>();
+        fadeIn = FindObjectOfType<FadeIn>();
     }
 
     void Update()
