@@ -207,8 +207,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 995350935}
-        m_TargetAssemblyTypeName: MainMenu, Assembly-CSharp
+      - m_Target: {fileID: 2117494386}
+        m_TargetAssemblyTypeName: GameOverButtons, Assembly-CSharp
         m_MethodName: QuitGame
         m_Mode: 1
         m_Arguments:
@@ -403,7 +403,6 @@ GameObject:
   - component: {fileID: 995350932}
   - component: {fileID: 995350933}
   - component: {fileID: 995350934}
-  - component: {fileID: 995350935}
   m_Layer: 5
   m_Name: GameOver
   m_TagString: Untagged
@@ -440,7 +439,7 @@ CanvasGroup:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 995350931}
   m_Enabled: 1
-  m_Alpha: 1
+  m_Alpha: 0
   m_Interactable: 1
   m_BlocksRaycasts: 1
   m_IgnoreParentGroups: 0
@@ -460,18 +459,6 @@ MonoBehaviour:
   fadeIn: 0
   timeBeforeFadeIn: 1.5
   fadeTime: 0.5
---- !u!114 &995350935
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 995350931}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 936091611e6ff4149a3982354627c23b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1062793789
 GameObject:
   m_ObjectHideFlags: 0
@@ -648,8 +635,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 995350935}
-        m_TargetAssemblyTypeName: MainMenu, Assembly-CSharp
+      - m_Target: {fileID: 2117494386}
+        m_TargetAssemblyTypeName: GameOverButtons, Assembly-CSharp
         m_MethodName: PlayGame
         m_Mode: 1
         m_Arguments:
@@ -1230,6 +1217,7 @@ GameObject:
   - component: {fileID: 2117494383}
   - component: {fileID: 2117494385}
   - component: {fileID: 2117494384}
+  - component: {fileID: 2117494386}
   m_Layer: 5
   m_Name: Buttons
   m_TagString: Untagged
@@ -1283,7 +1271,22 @@ CanvasGroup:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2117494382}
   m_Enabled: 1
-  m_Alpha: 1
+  m_Alpha: 0
   m_Interactable: 1
   m_BlocksRaycasts: 1
   m_IgnoreParentGroups: 0
+--- !u!114 &2117494386
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2117494382}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c53003babf28fac4f9ae45f687f1da45, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  myUIGroup: {fileID: 2117494385}
+  button: {fileID: 1131577509}
+  Otherbutton: {fileID: 394824098}
