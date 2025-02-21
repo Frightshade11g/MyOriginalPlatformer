@@ -2,22 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class FadeIn : MonoBehaviour
 {
     [SerializeField] private CanvasGroup myUIGroup;
-    [SerializeField] public bool fadeIn = false;
-    [SerializeField] public bool fadeOut = false;
-
-    void ShowUI()
-    {
-        fadeIn = true;   
-    }
-
-    void HideUI()
-    {
-        fadeOut = true;
-    }
+    public bool fadeIn = false;
 
     private void Update()
     {
@@ -33,16 +23,9 @@ public class FadeIn : MonoBehaviour
             }
         }
 
-        if (fadeOut)
+        if(myUIGroup.alpha == 1)
         {
-            if (myUIGroup.alpha >= 0)
-            {
-                myUIGroup.alpha -= Time.deltaTime;
-                if (myUIGroup.alpha == 0)
-                {
-                    fadeOut = false;
-                }
-            }
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
         }
     }
 }
