@@ -7,25 +7,25 @@ using UnityEngine.UI;
 public class FadeIn : MonoBehaviour
 {
     [SerializeField] private CanvasGroup myUIGroup;
-    public bool fadeIn = false;
+    bool fadeInOwO = false;
+
+    public void SetToTrue()
+    {
+        fadeInOwO = true;
+    }
 
     private void Update()
     {
-        if(fadeIn)
+        if (fadeInOwO)
         {
             if(myUIGroup.alpha < 1)
             {
                 myUIGroup.alpha += Time.deltaTime;
                 if(myUIGroup.alpha > 1)
                 {
-                    fadeIn = false;
+                    fadeInOwO = false;
                 }
             }
-        }
-
-        if(myUIGroup.alpha >= 1)
-        {
-            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
         }
     }
 }

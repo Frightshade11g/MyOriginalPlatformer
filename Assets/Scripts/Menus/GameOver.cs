@@ -8,31 +8,28 @@ public class GameOver : MonoBehaviour
     [SerializeField] private CanvasGroup myUIGroup;
     public bool fadeIn = false;
 
-    float fadeCounter;
     [SerializeField] float timeBeforeFadeIn;
     [SerializeField] float fadeTime = 0.5f;
 
-    private void Start()
+    public void SetToTrue()
     {
-        fadeCounter = timeBeforeFadeIn;
+        fadeIn = true;
     }
 
     private void Update()
     {
-        fadeCounter -= Time.deltaTime;
-        if(fadeCounter <= 0)
-        {
-            fadeIn = true;
-        }
-
         if (fadeIn)
         {
-            if (myUIGroup.alpha < 1)
+            timeBeforeFadeIn -= Time.deltaTime;
+            if (timeBeforeFadeIn <= 0)
             {
-                myUIGroup.alpha += Time.deltaTime * fadeTime;
-                if (myUIGroup.alpha > 1)
+                if (myUIGroup.alpha < 1)
                 {
-                    fadeIn = false;
+                    myUIGroup.alpha += Time.deltaTime * fadeTime;
+                    if (myUIGroup.alpha > 1)
+                    {
+                        fadeIn = false;
+                    }
                 }
             }
         }

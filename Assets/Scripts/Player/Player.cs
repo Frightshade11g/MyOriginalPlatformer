@@ -10,7 +10,7 @@ public class Player : MonoBehaviour
     private Rigidbody2D rb;
     private CapsuleCollider2D col;
     MovingPlatforms movingPlatforms;
-    FadeIn fadeIn;
+    [SerializeField] GameOver[] gameover;
     [SerializeField] Canvas canvasObject;
 
     [Header("Jumping Variables")]
@@ -38,7 +38,7 @@ public class Player : MonoBehaviour
     [Header("Health Variables")]
     public HealthBar healthBar;
     private int maxHealth = 100;
-    private int currentHealth;
+    public int currentHealth;
 
     void Awake()
     {
@@ -47,7 +47,7 @@ public class Player : MonoBehaviour
         movingPlatforms = FindAnyObjectByType<MovingPlatforms>();
         currentHealth = maxHealth;
         healthBar.SetMaxHealth(maxHealth);
-        fadeIn = FindObjectOfType<FadeIn>();
+        gameover = FindObjectsOfType<GameOver>();
     }
 
     void Update()
@@ -72,8 +72,11 @@ public class Player : MonoBehaviour
     {
         if(currentHealth <= 0)
         {
-            fadeIn.fadeIn = true;
-            canvasObject.GetComponent<Canvas>().enabled = false;
+            foreach(GameOver gameOver in gameover)
+            {
+                gameOver.SetToTrue();
+            }
+            canvasObject.enabled = false;
         }
     }
 
