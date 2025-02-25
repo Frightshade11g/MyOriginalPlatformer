@@ -38,6 +38,7 @@ public class GameOverButtons : MonoBehaviour
     {
         if (myUIGroup.alpha == 1)
         {
+            Debug.Log("Quit");
             Application.Quit();
         }
     }

@@ -40,6 +40,8 @@ public class Player : MonoBehaviour
     private int maxHealth = 100;
     public int currentHealth;
 
+    public bool isDead = false;
+
     void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -70,12 +72,13 @@ public class Player : MonoBehaviour
 
     void GameOver()
     {
-        if(currentHealth <= 0)
+        if (currentHealth <= 0)
         {
             foreach(GameOver gameOver in gameover)
             {
                 gameOver.SetToTrue();
             }
+            isDead = true;
             canvasObject.enabled = false;
         }
     }
@@ -104,13 +107,16 @@ public class Player : MonoBehaviour
 
     private void JumpBuffer()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
+        if(!isDead)
         {
-            jumpBufferCounter = jumpBufferTime;
-        }
-        else
-        {
-            jumpBufferCounter -= Time.deltaTime;
+            if (Input.GetKeyDown(KeyCode.Space))
+            {
+                jumpBufferCounter = jumpBufferTime;
+            }
+            else
+            {
+                jumpBufferCounter -= Time.deltaTime;
+            }
         }
     }
 
@@ -155,19 +161,22 @@ public class Player : MonoBehaviour
 
     private void HandleMovement()
     {
-        if(Input.GetKey(KeyCode.A))
+        if(!isDead)
         {
-            rb.velocity = new Vector2(-moveSpeed, rb.velocity.y);
-        }
-        else
-        {
-            if (Input.GetKey(KeyCode.D))
+            if (Input.GetKey(KeyCode.A))
             {
-                rb.velocity = new Vector2(+moveSpeed, rb.velocity.y);
+                rb.velocity = new Vector2(-moveSpeed, rb.velocity.y);
             }
             else
             {
-                rb.velocity = new Vector2(0, rb.velocity.y);
+                if (Input.GetKey(KeyCode.D))
+                {
+                    rb.velocity = new Vector2(+moveSpeed, rb.velocity.y);
+                }
+                else
+                {
+                    rb.velocity = new Vector2(0, rb.velocity.y);
+                }
             }
         }
     }
