@@ -74,7 +74,9 @@ public class Player : MonoBehaviour
     {
         if (currentHealth <= 0)
         {
-            foreach(GameOver gameOver in gameover)
+            rb.constraints = RigidbodyConstraints2D.FreezePositionX;
+            rb.constraints = RigidbodyConstraints2D.FreezePositionY;
+            foreach (GameOver gameOver in gameover)
             {
                 gameOver.SetToTrue();
             }
