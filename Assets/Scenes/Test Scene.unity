@@ -1392,7 +1392,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 368049421}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Enemy PointB
   m_TagString: Untagged
   m_Icon: {fileID: 7422848464349959988, guid: 0000000000000000d000000000000000, type: 0}
@@ -1423,7 +1423,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 424878227}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Enemy PointA
   m_TagString: Untagged
   m_Icon: {fileID: 7422848464349959988, guid: 0000000000000000d000000000000000, type: 0}
@@ -1683,7 +1683,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
-  m_Color: {r: 0.7924528, g: 0.31772873, b: 0.31772873, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -1749,6 +1749,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gameover: []
   canvasObject: {fileID: 749498580}
+  spriteRend: {fileID: 707398755}
   jumpVelocity: 17
   groundlayerMask:
     serializedVersion: 2
@@ -1759,6 +1760,8 @@ MonoBehaviour:
   moveSpeed: 12
   healthBar: {fileID: 1114187701}
   currentHealth: 0
+  iFramesDuration: 1.6
+  numberOfFlashes: 3
   isDead: 0
 --- !u!70 &707398764
 CapsuleCollider2D:
@@ -2086,7 +2089,7 @@ GameObject:
   - component: {fileID: 786006477}
   - component: {fileID: 786006476}
   - component: {fileID: 786006480}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Enemy
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2171,6 +2174,8 @@ MonoBehaviour:
   - {fileID: 424878227}
   - {fileID: 368049421}
   idleTime: 2
+  player: {fileID: 0}
+  damageTime: 0.75
 --- !u!212 &786006479
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -4319,7 +4324,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1758687723}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Roaming Enemy
   m_TagString: Untagged
   m_Icon: {fileID: 0}

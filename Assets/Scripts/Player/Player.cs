@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.InteropServices.WindowsRuntime;
+using UnityEditor;
 using UnityEngine;
 
 public class Player : MonoBehaviour
@@ -12,6 +13,7 @@ public class Player : MonoBehaviour
     MovingPlatforms movingPlatforms;
     [SerializeField] GameOver[] gameover;
     [SerializeField] Canvas canvasObject;
+    [SerializeField] private SpriteRenderer spriteRend;
 
     [Header("Jumping Variables")]
     [SerializeField] float jumpVelocity = 10f;
@@ -40,6 +42,10 @@ public class Player : MonoBehaviour
     private int maxHealth = 100;
     public int currentHealth;
 
+    [Header("IFrames")]
+    [SerializeField] private float iFramesDuration;
+    [SerializeField] int numberOfFlashes;
+
     public bool isDead = false;
 
     void Awake()
@@ -50,6 +56,8 @@ public class Player : MonoBehaviour
         currentHealth = maxHealth;
         healthBar.SetMaxHealth(maxHealth);
         gameover = FindObjectsOfType<GameOver>();
+        isDead = false;
+        spriteRend.color = Color.white;
     }
 
     void Update()
@@ -60,6 +68,7 @@ public class Player : MonoBehaviour
         HandleMovement();
         Animations();
         GameOver();
+        StopMovement();
     }
 
     #region Healh Management
@@ -68,6 +77,7 @@ public class Player : MonoBehaviour
     {
         currentHealth -= damage;
         healthBar.SetHealth(currentHealth);
+        StartCoroutine(Invunerability());
     }
 
     void GameOver()
@@ -82,6 +92,28 @@ public class Player : MonoBehaviour
             }
             isDead = true;
             canvasObject.enabled = false;
+        }
+    }
+
+    private IEnumerator Invunerability()
+    {
+        Physics2D.IgnoreLayerCollision(6, 8, true);
+        for (int i = 0; i < numberOfFlashes; i++)
+        {
+            spriteRend.color = new Color(1, 0, 0, 0.66666f);
+            yield return new WaitForSeconds(iFramesDuration / (numberOfFlashes * 2));
+            spriteRend.color = Color.white;
+            yield return new WaitForSeconds(iFramesDuration / (numberOfFlashes * 2));
+        }
+        Physics2D.IgnoreLayerCollision(6, 8, false);
+    }
+
+    void StopMovement()
+    {
+        if (isDead)
+        {
+            StopAllCoroutines();
+            spriteRend.color = new Color(1, 0, 0, 0.66666f);
         }
     }
 

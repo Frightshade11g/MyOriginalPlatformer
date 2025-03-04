@@ -12,8 +12,8 @@ public class RoamingEnemy : MonoBehaviour
 
     [SerializeField] Player player;
 
-    float damageCounter;
-    [SerializeField] float damageTime = 0.75f;
+    //float damageCounter;
+    //[SerializeField] float damageTime = 0.75f;
 
     private int i; //index of array
 
@@ -56,20 +56,5 @@ public class RoamingEnemy : MonoBehaviour
                 player.TakeDamage(20);
             }
         }
-    }
-    
-    private void OnCollisionStay2D(Collision2D collision)
-    {
-      if(damageCounter > 0)
-      {
-          damageCounter -= Time.deltaTime;
-      }
-
-      if (damageCounter <= 0)
-      {
-          player.TakeDamage(20);
-          damageCounter = damageTime;
-      }
-
     }
 }

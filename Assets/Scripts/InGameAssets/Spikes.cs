@@ -18,22 +18,4 @@ public class Spikes : MonoBehaviour
     {
         player.TakeDamage(20);
     }
-
-    private void OnCollisionStay2D(Collision2D collision)
-    {
-        if(damageCounter > 0)
-        {
-            damageCounter -= Time.deltaTime;
-        }
-        if(damageCounter <= 0)
-        {
-            player.TakeDamage(20);
-            damageCounter = damageTime;
-        }
-    }
-
-    private void OnCollisionExit2D(Collision2D collision)
-    {
-        damageCounter = damageTime;
-    }
 }
