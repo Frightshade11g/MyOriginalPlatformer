@@ -82,7 +82,7 @@ public class Player : MonoBehaviour
 
     void GameOver()
     {
-        if (currentHealth <= 0)
+        if (currentHealth <= 0 || transform.position.y < -20f)
         {
             rb.constraints = RigidbodyConstraints2D.FreezePositionX;
             rb.constraints = RigidbodyConstraints2D.FreezePositionY;
