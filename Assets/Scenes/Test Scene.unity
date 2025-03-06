@@ -1823,6 +1823,7 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
 <<<<<<< HEAD
+<<<<<<< HEAD
   m_Constraints: 7
 --- !u!61 &786006481
 BoxCollider2D:
@@ -1871,6 +1872,8 @@ BoxCollider2D:
   m_EdgeRadius: 0
 --- !u!1 &793703042
 =======
+=======
+>>>>>>> parent of 21d1057 (Enemy changes)
   m_Constraints: 0
 --- !u!1 &823312019
 >>>>>>> parent of 21d1057 (Enemy changes)
