@@ -14,10 +14,10 @@ public class Player : MonoBehaviour
     [SerializeField] GameOver[] gameover;
     [SerializeField] Canvas canvasObject;
     [SerializeField] private SpriteRenderer spriteRend;
+    [SerializeField] private LayerMask groundlayerMask;
 
     [Header("Jumping Variables")]
     [SerializeField] float jumpVelocity = 10f;
-    [SerializeField] private LayerMask groundlayerMask;
     private float fallGravityScale = 6f;
     private float gravityScale = 4f;
 

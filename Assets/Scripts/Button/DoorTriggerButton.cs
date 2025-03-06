@@ -4,25 +4,25 @@ using UnityEngine;
 
 public class DoorTriggerButton : MonoBehaviour
 {
-    [SerializeField] private DoorSetActive doorSetActive;
+    [SerializeField] private Door door;
 
     private void Update()
     {
         if(Input.GetKeyDown(KeyCode.F))
         {
-            doorSetActive.OpenDoor();
+            door.OpenDoor();
         }
 
         if (Input.GetKeyDown(KeyCode.G))
         {
-            doorSetActive.CloseDoor();
+            //doorSetActive.CloseDoor();
         }
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if(collision.CompareTag("Button"))
         {
-            doorSetActive.OpenDoor();
+            door.OpenDoor();
         }
     }
 }
