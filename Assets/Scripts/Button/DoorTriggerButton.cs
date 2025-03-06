@@ -5,24 +5,19 @@ using UnityEngine;
 public class DoorTriggerButton : MonoBehaviour
 {
     [SerializeField] private Door door;
+    SpriteRenderer spriteRend;
 
-    private void Update()
+    private void Awake()
     {
-        if(Input.GetKeyDown(KeyCode.F))
-        {
-            door.OpenDoor();
-        }
-
-        if (Input.GetKeyDown(KeyCode.G))
-        {
-            //doorSetActive.CloseDoor();
-        }
+        spriteRend = GetComponent<SpriteRenderer>();
     }
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if(collision.CompareTag("Button"))
+        if(collision.CompareTag("Player"))
         {
             door.OpenDoor();
+            spriteRend.color = Color.yellow;
         }
     }
 }
