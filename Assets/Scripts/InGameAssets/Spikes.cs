@@ -31,8 +31,6 @@ public class Spikes : MonoBehaviour
                 collision.gameObject.GetComponent<Rigidbody2D>().AddForce(Vector2.up * bounce, ForceMode2D.Impulse);
                 bounced = true;
             }
-
-            //if collided & pressed jump { jump higher } stretch goal
         }
     }
 
