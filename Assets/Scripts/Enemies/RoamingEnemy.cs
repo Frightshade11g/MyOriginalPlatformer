@@ -15,8 +15,8 @@ public class RoamingEnemy : MonoBehaviour
     Rigidbody2D enemyRb;
     bool stomped;
 
-    [SerializeField] float bounce;
-    [SerializeField] float addedBounce;
+    //float damageCounter;
+    //[SerializeField] float damageTime = 0.75f;
 
     private int i; //index of array
 
@@ -30,7 +30,7 @@ public class RoamingEnemy : MonoBehaviour
 
     private void Update()
     {
-        if(!stomped) //if the player stomps on the enemy, the enemy dies and falls off-screen
+        if(!stomped)
         {
             if (Vector2.Distance(transform.position, points[i].position) < 0.02f)
             {
@@ -40,7 +40,7 @@ public class RoamingEnemy : MonoBehaviour
                     i++;  // increases the index
                     currentTime = idleTime;
                     gameObject.transform.rotation = Quaternion.Euler(0, 180, 0);
-                    if (i == points.Length) //check if the enemy reached the final point in the array (There's only two points but I copied this code from the moving platform to save time)
+                    if (i == points.Length) //check if the platform reached the final point in the array
                     {
                         i = 0;
                         gameObject.transform.rotation = Quaternion.Euler(0, 0, 0);
@@ -61,28 +61,17 @@ public class RoamingEnemy : MonoBehaviour
     {
         if (collision.collider.CompareTag("Player"))
         {
-            if (transform.position.y > collision.transform.position.y - 1.4f) //Damages player and adds a knockback effect for polish
-            {
-                if (collision.collider.CompareTag("Player"))
-                {
-                    player.TakeDamage(20);
-                    if(player.IsGrounded() == true)
-                    {
-                        collision.gameObject.GetComponent<Rigidbody2D>().AddForce(Vector2.up * addedBounce, ForceMode2D.Impulse);
-                    }
-                    else
-                    {
-                        collision.gameObject.GetComponent<Rigidbody2D>().AddRelativeForce(Vector2.left * bounce, ForceMode2D.Impulse);
-                    }
-                }
-            }
-
-            else //Kills the enemy if the player jumps on top of the enemy
+            if (transform.position.y < collision.transform.position.y - 1.5f)
             {
                 stomped = true;
                 boxCollider.enabled = false;
                 enemyRb.constraints = RigidbodyConstraints2D.None;
                 gameObject.transform.rotation = Quaternion.Euler(180, 0, 0);
+            }
+
+            else
+            {
+                player.TakeDamage(20);
             }
         }
     }
