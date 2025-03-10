@@ -414,6 +414,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5eecca0a24117e42b0c5d5c372d4517, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  player: {fileID: 707398762}
   bounce: 10
   AddedBounce: -1.2
 --- !u!61 &91199934
@@ -1828,7 +1829,7 @@ MonoBehaviour:
   - {fileID: 424878227}
   - {fileID: 368049421}
   idleTime: 1
-  player: {fileID: 0}
+  player: {fileID: 707398762}
   bounce: 5
   addedBounce: 10
 --- !u!212 &786006479

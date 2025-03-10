@@ -4,14 +4,14 @@ using UnityEngine;
 
 public class Spikes : MonoBehaviour
 {
-    Player player;
+    [SerializeField] Player player;
     bool bounced = false;
     [SerializeField] float bounce = 0.1f;
     [SerializeField] float AddedBounce = 20f;
 
     private void Awake()
     {
-        player = FindObjectOfType<Player>();
+        //player = FindObjectOfType<Player>();
         player.GetComponent<Rigidbody2D>();
     }
 

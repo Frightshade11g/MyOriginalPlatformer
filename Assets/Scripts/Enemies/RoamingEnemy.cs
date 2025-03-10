@@ -22,7 +22,7 @@ public class RoamingEnemy : MonoBehaviour
 
     private void Awake()
     {
-        player = FindObjectOfType<Player>();
+        //player = FindObjectOfType<Player>();
         boxCollider = GetComponent<BoxCollider2D>();
         enemyRb = GetComponent<Rigidbody2D>();
         currentTime = idleTime;

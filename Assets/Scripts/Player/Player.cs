@@ -59,6 +59,7 @@ public class Player : MonoBehaviour
         isDead = false;
         facingRight = true;
         spriteRend.color = Color.white;
+        Physics2D.IgnoreLayerCollision(6, 8, false);
     }
 
     void Update()
