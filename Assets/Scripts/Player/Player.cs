@@ -10,7 +10,6 @@ public class Player : MonoBehaviour
     [Header("References")]
     private Rigidbody2D rb;
     private CapsuleCollider2D col;
-    MovingPlatforms movingPlatforms;
     [SerializeField] GameOver[] gameover;
     [SerializeField] Canvas canvasObject;
     [SerializeField] private SpriteRenderer spriteRend;
@@ -36,6 +35,8 @@ public class Player : MonoBehaviour
 
     [Header("Movement Variables")]
     [SerializeField] float moveSpeed = 10f;
+    bool facingRight;
+    float horizontal;
 
     [Header("Health Variables")]
     public HealthBar healthBar;
@@ -52,11 +53,11 @@ public class Player : MonoBehaviour
     {
         rb = GetComponent<Rigidbody2D>();
         col = GetComponent<CapsuleCollider2D>();
-        movingPlatforms = FindAnyObjectByType<MovingPlatforms>();
         currentHealth = maxHealth;
         healthBar.SetMaxHealth(maxHealth);
         gameover = FindObjectsOfType<GameOver>();
         isDead = false;
+        facingRight = true;
         spriteRend.color = Color.white;
     }
 
@@ -65,10 +66,14 @@ public class Player : MonoBehaviour
         JumpBuffer();
         CoyoteTimeChecker();
         Jump();
-        HandleMovement();
         Animations();
         GameOver();
         StopMovement();
+    }
+
+    private void FixedUpdate()
+    {
+        HandleMovement();
     }
 
     #region Healh Management
@@ -195,17 +200,25 @@ public class Player : MonoBehaviour
 
     private void HandleMovement()
     {
-        if(!isDead)
+        if (!isDead)
         {
             if (Input.GetKey(KeyCode.A))
             {
                 rb.velocity = new Vector2(-moveSpeed, rb.velocity.y);
+                if(facingRight)
+                {
+                    Flip();
+                }
             }
             else
             {
                 if (Input.GetKey(KeyCode.D))
                 {
                     rb.velocity = new Vector2(+moveSpeed, rb.velocity.y);
+                    if(!facingRight)
+                    {
+                        Flip();
+                    }
                 }
                 else
                 {
@@ -215,13 +228,24 @@ public class Player : MonoBehaviour
         }
     }
 
+    void Flip()
+    {
+        Vector3 currentScale = gameObject.transform.localScale;
+        currentScale.x *= -1;
+        gameObject.transform.localScale = currentScale;
+
+        facingRight = !facingRight;
+    }
+
     #endregion
 
     #region Animations
 
     private void Animations()
     {
-        if(IsGrounded())
+        horizontal = Input.GetAxisRaw("Horizontal");
+
+        if (IsGrounded())
         {
             if(rb.velocity.x == 0)
             {
