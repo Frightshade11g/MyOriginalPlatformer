@@ -83,6 +83,7 @@ public class RoamingEnemy : MonoBehaviour
                 boxCollider.enabled = false;
                 enemyRb.constraints = RigidbodyConstraints2D.None;
                 gameObject.transform.rotation = Quaternion.Euler(180, 0, 0);
+                enemyRb.gravityScale *= 1.5f;
             }
         }
     }

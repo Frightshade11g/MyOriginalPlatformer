@@ -1490,8 +1490,8 @@ MonoBehaviour:
   moveSpeed: 12
   healthBar: {fileID: 1114187701}
   currentHealth: 0
-  iFramesDuration: 1.6
-  numberOfFlashes: 3
+  iFramesDuration: 1
+  numberOfFlashes: 2
   isDead: 0
 --- !u!70 &707398764
 CapsuleCollider2D:
