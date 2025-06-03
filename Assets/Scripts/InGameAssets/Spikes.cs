@@ -8,6 +8,7 @@ public class Spikes : MonoBehaviour
     bool bounced = false;
     [SerializeField] float bounce = 0.1f;
     [SerializeField] float AddedBounce = 20f;
+    [SerializeField] float offset = 0.44f;
 
     private void Awake()
     {
@@ -23,7 +24,7 @@ public class Spikes : MonoBehaviour
         {
             if (collision.gameObject.CompareTag("Player"))
             {
-                if (transform.position.y < collision.transform.position.y - 1f)
+                if (transform.position.y < collision.transform.position.y - offset)
                 {
                     collision.gameObject.GetComponent<Rigidbody2D>().AddForce(Vector2.up * player.GetComponent<Rigidbody2D>().velocity.y * AddedBounce, ForceMode2D.Impulse);
                 }
