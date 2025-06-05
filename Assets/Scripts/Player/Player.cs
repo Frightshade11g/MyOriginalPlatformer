@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.InteropServices.WindowsRuntime;
 using UnityEditor;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 
 public class Player : MonoBehaviour
@@ -10,6 +11,7 @@ public class Player : MonoBehaviour
     [Header("References")]
     private Rigidbody2D rb;
     private CapsuleCollider2D col;
+    private BoxCollider2D trigger;
     [SerializeField] GameOver[] gameover;
     [SerializeField] Canvas canvasObject;
     [SerializeField] private SpriteRenderer spriteRend;
@@ -37,6 +39,7 @@ public class Player : MonoBehaviour
     [SerializeField] float moveSpeed = 10f;
     bool facingRight;
     float horizontal;
+    bool stopRight = false;
 
     [Header("Health Variables")]
     public HealthBar healthBar;
@@ -53,6 +56,7 @@ public class Player : MonoBehaviour
     {
         rb = GetComponent<Rigidbody2D>();
         col = GetComponent<CapsuleCollider2D>();
+        trigger = GetComponent<BoxCollider2D>();
         currentHealth = maxHealth;
         healthBar.SetMaxHealth(maxHealth);
         gameover = FindObjectsOfType<GameOver>();
@@ -64,6 +68,7 @@ public class Player : MonoBehaviour
 
     void Update()
     {
+        //Debug.Log(Input.GetAxis("Horizontal"));
         JumpBuffer();
         CoyoteTimeChecker();
         Jump();
@@ -75,6 +80,26 @@ public class Player : MonoBehaviour
     private void FixedUpdate()
     {
         HandleMovement();
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.CompareTag("Ground") /*&& Input.GetAxis("Horizontal") >= 0.3*/)
+        {
+            Debug.Log("Yo!");
+            rb.velocity = Vector2.zero;
+            stopRight = true;
+        }
+        //if (collision.gameObject.layer == groundlayerMask /*&& Input.GetAxis("Horizontal") <= -0.3*/)
+        //{
+        //    Debug.Log("Yo!");
+        //    //rb.velocity = Vector2.zero;
+        //    //stop = true;
+        //}
+        else
+        {
+            stopRight = false;
+        }
     }
 
     #region Healh Management
@@ -204,27 +229,30 @@ public class Player : MonoBehaviour
     {
         if (!isDead)
         {
-            if (Input.GetKey(KeyCode.A))
+            if(!stopRight)
             {
-                rb.velocity = new Vector2(-moveSpeed, rb.velocity.y);
-                if(facingRight)
+                if (Input.GetKey(KeyCode.A))
                 {
-                    Flip();
-                }
-            }
-            else
-            {
-                if (Input.GetKey(KeyCode.D))
-                {
-                    rb.velocity = new Vector2(+moveSpeed, rb.velocity.y);
-                    if(!facingRight)
+                    rb.velocity = new Vector2(-moveSpeed, rb.velocity.y);
+                    if (facingRight)
                     {
                         Flip();
                     }
                 }
                 else
                 {
-                    rb.velocity = new Vector2(0, rb.velocity.y);
+                    if (Input.GetKey(KeyCode.D))
+                    {
+                        rb.velocity = new Vector2(+moveSpeed, rb.velocity.y);
+                        if (!facingRight)
+                        {
+                            Flip();
+                        }
+                    }
+                    else
+                    {
+                        rb.velocity = new Vector2(0, rb.velocity.y);
+                    }
                 }
             }
         }
