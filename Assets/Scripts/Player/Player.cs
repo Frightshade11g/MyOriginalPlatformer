@@ -16,6 +16,7 @@ public class Player : MonoBehaviour
     [SerializeField] Canvas canvasObject;
     [SerializeField] private SpriteRenderer spriteRend;
     [SerializeField] private LayerMask groundlayerMask;
+    [SerializeField] private Animator animator;
 
     [Header("Jumping Variables")]
     [SerializeField] float jumpVelocity = 10f;
@@ -68,7 +69,7 @@ public class Player : MonoBehaviour
 
     void Update()
     {
-        //Debug.Log(Input.GetAxis("Horizontal"));
+        animator.SetFloat("PlayerMoveSpeed", Mathf.Abs(rb.velocity.x));
         JumpBuffer();
         CoyoteTimeChecker();
         Jump();
@@ -155,7 +156,7 @@ public class Player : MonoBehaviour
     public bool IsGrounded()
     {
         RaycastHit2D rayCastHit2D = Physics2D.BoxCast(col.bounds.center, col.bounds.size - new Vector3(.1f, 0, 0), 0f, Vector2.down, 0.01f, groundlayerMask);
-         
+        
         return rayCastHit2D.collider != null;
     }
 
@@ -164,6 +165,7 @@ public class Player : MonoBehaviour
         if (IsGrounded())
         {
             coyoteTimeCounter = coyoteTime;
+            animator.SetBool("JumpDown", false);
         }
         else
         {
@@ -198,6 +200,7 @@ public class Player : MonoBehaviour
                 rb.gravityScale = gravityScale;
                 rb.velocity = Vector2.up * jumpVelocity;
                 buttonPressedTime = 0f;
+                animator.SetBool("JumpUp", true);
             }
             else if (jumping)
             {
@@ -217,7 +220,20 @@ public class Player : MonoBehaviour
             {
                 rb.gravityScale = fallGravityScale;
                 jumping = false;
+                animator.SetBool("JumpUp", false);
+                animator.SetBool("JumpDown", true);
             }
+        }
+
+        if(rb.velocity.y > 0)
+        {
+            animator.SetBool("JumpDown", false);
+            animator.SetBool("JumpUp", true);
+        }
+        if (rb.velocity.y < 0)
+        {
+            animator.SetBool("JumpUp", false);
+            animator.SetBool("JumpDown", true);
         }
     }
 
