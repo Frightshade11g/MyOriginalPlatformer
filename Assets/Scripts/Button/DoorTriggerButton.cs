@@ -6,6 +6,7 @@ public class DoorTriggerButton : MonoBehaviour
 {
     [SerializeField] private Door door;
     SpriteRenderer spriteRend;
+    [SerializeField] Sprite switched;
 
     private void Awake()
     {
@@ -17,7 +18,7 @@ public class DoorTriggerButton : MonoBehaviour
         if(collision.CompareTag("Player"))
         {
             door.OpenDoor();
-            spriteRend.color = Color.yellow;
+            spriteRend.sprite = switched;
         }
     }
 }
