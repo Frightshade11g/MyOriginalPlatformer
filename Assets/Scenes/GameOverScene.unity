@@ -456,7 +456,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   myUIGroup: {fileID: 995350933}
-  fadeIn: 0
+  fadeIn: 1
   timeBeforeFadeIn: 1.5
   fadeTime: 0.5
 --- !u!1 &1062793789
@@ -1260,7 +1260,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   myUIGroup: {fileID: 2117494385}
-  fadeIn: 0
+  fadeIn: 1
   timeBeforeFadeIn: 4.3
   fadeTime: 0.5
 --- !u!225 &2117494385
