@@ -17,6 +17,7 @@ public class RoamingEnemy : MonoBehaviour
 
     [SerializeField] float bounce;
     [SerializeField] float addedBounce;
+    [SerializeField] float enempStompedHeight = 0.5f;
 
     private int i; //index of array
 
@@ -61,7 +62,7 @@ public class RoamingEnemy : MonoBehaviour
     {
         if (collision.collider.CompareTag("Player"))
         {
-            if (transform.position.y > collision.transform.position.y - 1.4f) //Damages player and adds a knockback effect for polish
+            if (transform.position.y > collision.transform.position.y - enempStompedHeight) //Damages player and adds a knockback effect for polish
             {
                 if (collision.collider.CompareTag("Player"))
                 {
