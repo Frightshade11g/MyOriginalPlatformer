@@ -216,7 +216,7 @@ public class Player : MonoBehaviour
             {
                 rb.gravityScale = jumpCutGravityMultiplier;
             }
-            if (rb.velocity.y < 0)
+            if (rb.velocity.y < 0.1)
             {
                 rb.gravityScale = fallGravityScale;
                 jumping = false;
@@ -225,7 +225,7 @@ public class Player : MonoBehaviour
             }
         }
 
-        if(rb.velocity.y > 0)
+        if(rb.velocity.y > 0.1)
         {
             animator.SetBool("JumpDown", false);
             animator.SetBool("JumpUp", true);
